@@ -6,6 +6,7 @@ var path = require('path');
 
 var myAwesomeModule = new AwesomeModule('hublin.easyrtc.connector', {
   dependencies: [
+    new Dependency(Dependency.TYPE_ABILITY, 'wsserver', 'wsserver'),
     new Dependency(Dependency.TYPE_NAME, 'linagora.io.meetings.core.logger', 'logger'),
   ],
   abilities: ['hublin.webrtc.connector'],

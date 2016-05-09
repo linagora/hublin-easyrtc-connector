@@ -2,7 +2,8 @@
 
 module.exports = function(dependencies) {
   var api = {
-    adapter: require('./EasyRTCAdapter')
+    adapter: require('./EasyRTCAdapter'),
+    auth: require('./auth/token')
   };
 
   return api;
