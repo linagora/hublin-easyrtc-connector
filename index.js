@@ -7,7 +7,8 @@ var path = require('path');
 var myAwesomeModule = new AwesomeModule('hublin.easyrtc.connector', {
   dependencies: [
     new Dependency(Dependency.TYPE_ABILITY, 'wsserver', 'wsserver'),
-    new Dependency(Dependency.TYPE_NAME, 'linagora.io.meetings.core.logger', 'logger'),
+    new Dependency(Dependency.TYPE_NAME, 'webserver.wrapper', 'webserver-wrapper'),
+    new Dependency(Dependency.TYPE_NAME, 'linagora.io.meetings.core.logger', 'logger')
   ],
   abilities: ['hublin.webrtc.connector'],
   states: {
@@ -20,6 +21,10 @@ var myAwesomeModule = new AwesomeModule('hublin.easyrtc.connector', {
     },
 
     deploy: function(dependencies, callback) {
+      var app = require('./backend/webserver/application')();
+      var webserverWrapper = dependencies('webserver-wrapper');
+      webserverWrapper.injectAngularModules('connector', ['app.js', 'services/easyRTCAdapter.js'], 'hublin.easyrtc.connector', ['live-conference']);
+      webserverWrapper.addApp('connector', app);
       return callback();
     }
   }
