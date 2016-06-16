@@ -5,6 +5,7 @@ module.exports = function(config) {
     basePath: '../../',
     files: [
       'frontend/components/chai/chai.js',
+      'frontend/components/chai-spies/chai-spies.js',
       'node_modules/chai-shallow-deep-equal/chai-shallow-deep-equal.js',
       'frontend/components/jquery/dist/jquery.min.js',
       'frontend/components/angular/angular.min.js',
