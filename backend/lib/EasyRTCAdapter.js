@@ -3,6 +3,8 @@
 var events = require('events');
 var easyrtc = require('easyrtc');
 
+easyrtc.setOption('easyrtcidRegExp', /^.*[a-z0-9_.-]{1,32}$/i);
+
 function EasyRTCAdapter() {
   var self = this;
 
