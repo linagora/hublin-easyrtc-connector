@@ -418,7 +418,11 @@ angular.module('hublin.easyrtc.connector')
       });
 
       function setGotMedia(cb) {
-        easyrtc.setGotMedia(cb);
+        if(easyrtc.setGotMedia) {
+          easyrtc.setGotMedia(cb);
+        } else {
+          cb(easyrtc.setGotMedia,"media stream not found");
+        }
       }
 
       function connection() {
