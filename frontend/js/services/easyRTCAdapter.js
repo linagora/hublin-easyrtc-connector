@@ -284,7 +284,7 @@ angular.module('hublin.easyrtc.connector')
 
           addPeerListener(function(easyrtcid, msgType, msgData) {
             $log.debug('Event %s received from %s with data: ', EASYRTC_EVENTS.attendeeUpdate, easyrtcid, msgData);
-            conferenceState.updateAttendeeByEasyrtcid(easyrtcid, msgData);
+            conferenceState.updateAttendeeByRtcid(easyrtcid, msgData);
           }, EASYRTC_EVENTS.attendeeUpdate);
         }
 
@@ -365,7 +365,7 @@ angular.module('hublin.easyrtc.connector')
       function prepareAttendeeForBroadcast(attendee) {
         return {
           id: attendee.id,
-          easyrtcid: attendee.easyrtcid,
+          easyrtcid: attendee.rtcid,
           displayName: attendee.displayName,
           avatar: attendee.avatar,
           mute: attendee.mute,
@@ -392,7 +392,7 @@ angular.module('hublin.easyrtc.connector')
       }
 
       function broadcastMe() {
-        var attendee = currentConferenceState.getAttendeeByEasyrtcid(myEasyrtcid());
+        var attendee = currentConferenceState.getAttendeeByRtcid(myEasyrtcid());
 
         if (!attendee) {
           return;
@@ -418,10 +418,10 @@ angular.module('hublin.easyrtc.connector')
       });
 
       function setGotMedia(cb) {
-        if(easyrtc.setGotMedia) {
+        if (easyrtc.setGotMedia) {
           easyrtc.setGotMedia(cb);
         } else {
-          cb(easyrtc.setGotMedia,"media stream not found");
+          cb(easyrtc.setGotMedia, 'media stream not found');
         }
       }
 
@@ -482,7 +482,7 @@ angular.module('hublin.easyrtc.connector')
         isVideoEnabled: isVideoEnabled,
         configureBandwidth: configureBandwidth,
         setPeerListener: setPeerListener,
-        myEasyrtcid: myEasyrtcid,
+        myRtcid: myEasyrtcid,
         broadcastData: broadcastData,
         broadcastMe: broadcastMe,
         addDisconnectCallback: addDisconnectCallback,

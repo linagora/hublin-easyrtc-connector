@@ -141,12 +141,12 @@ describe('easyRTCAdapter service', function() {
   describe('broadcastMe function', function() {
 
     it('should call broadcastData with a prepared attendee', function() {
-      currentConferenceState.getAttendeeByEasyrtcid = function() {
+      currentConferenceState.getAttendeeByRtcid = function() {
         return {
           index: 0,
           videoId: 'videoId',
           id: 'id',
-          easyrtcid: 'easyrtcid',
+          rtcid: 'easyrtcid',
           displayName: 'displayName',
           avatar: 'avatar',
           mute: true,
@@ -174,7 +174,7 @@ describe('easyRTCAdapter service', function() {
     });
 
     it('should do nothing if attendee cannot be found', function() {
-      currentConferenceState.getAttendeeByEasyrtcid = function() { return null; };
+      currentConferenceState.getAttendeeByRtcid = function() { return null; };
       easyrtc.getRoomOccupantsAsArray = function() {
         throw new Error('This test should not call easyrtc.getRoomOccupantsAsArray.');
       };
