@@ -16,12 +16,12 @@ var DummyCallbackConstructor = function() {
   };
 };
 
-describe('easyRTCAdapter service', function() {
-  var service, tokenAPI, session, webrtcFactory, easyrtc, currentConferenceState, disconnectCallback, $rootScope, $scope, easyRTCBitRates;
+beforeEach(function() {
+  angular.mock.module('hublin.easyrtc.connector');
+});
 
-  beforeEach(function() {
-    angular.mock.module('hublin.easyrtc.connector');
-  });
+describe('easyRTCAdapter service', function() {
+  var service, tokenAPI, session, webrtcFactory, easyrtc, currentConferenceState, disconnectCallback, $rootScope, $scope, EASYRTC_BITRATES;
 
   beforeEach(function() {
     var dummyDataOpenListener = new DummyCallbackConstructor(),
@@ -73,7 +73,7 @@ describe('easyRTCAdapter service', function() {
         return easyrtc;
       }
     };
-    easyRTCBitRates = {
+    EASYRTC_BITRATES = {
       low: {
         audio: 20,
         video: 30
@@ -96,7 +96,7 @@ describe('easyRTCAdapter service', function() {
       });
       $provide.value('ioConnectionManager', {});
       $provide.value('currentConferenceState', currentConferenceState);
-      $provide.value('easyRTCBitRates', easyRTCBitRates);
+      $provide.value('EASYRTC_BITRATES', EASYRTC_BITRATES);
       $provide.value('LOCAL_VIDEO_ID', 'video-thumb0');
       $provide.value('REMOTE_VIDEO_IDS', []);
       $provide.value('EASYRTC_APPLICATION_NAME', 'LiveConference');
@@ -496,8 +496,6 @@ describe('easyRTCAdapter service', function() {
 describe('listenerFactory factory', function() {
   var service, dummyCallback, listen, emptyFunction;
 
-  beforeEach(angular.mock.module('hublin.easyrtc.connector'));
-
   beforeEach(function() {
     inject(function($injector) {
       service = $injector.get('listenerFactory');
@@ -559,11 +557,7 @@ describe('listenerFactory factory', function() {
 });
 
 describe('conferenceState easyrtc service', function() {
-    var service, $q, $rootScope, $log, tokenAPI, session, webrtcFactory, webrtcObject, easyRTCBitRates;
-
-    beforeEach(function() {
-      angular.mock.module('hublin.easyrtc.connector');
-    });
+    var service, $q, $rootScope, $log, tokenAPI, session, webrtcFactory, webrtcObject, EASYRTC_BITRATES;
 
     beforeEach(function() {
       tokenAPI = {};
@@ -585,7 +579,7 @@ describe('conferenceState easyrtc service', function() {
           _id: 123
         }
       };
-      easyRTCBitRates = {
+      EASYRTC_BITRATES = {
         low: {
           audio: 20,
           video: 30
@@ -656,7 +650,7 @@ describe('conferenceState easyrtc service', function() {
         $provide.value('ioSocketConnection', ioSocketConnection);
         $provide.value('ioConnectionManager', ioConnectionManager);
         $provide.value('currentConferenceState', {});
-        $provide.value('easyRTCBitRates', easyRTCBitRates);
+        $provide.value('EASYRTC_BITRATES', EASYRTC_BITRATES);
         $provide.value('LOCAL_VIDEO_ID', 'video-thumb0');
         $provide.value('REMOTE_VIDEO_IDS', []);
         $provide.value('EASYRTC_APPLICATION_NAME', 'LiveConference');

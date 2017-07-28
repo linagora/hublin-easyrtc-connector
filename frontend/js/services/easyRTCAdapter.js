@@ -43,9 +43,9 @@ angular.module('hublin.easyrtc.connector')
   })
 
   .factory('easyRTCAdapter', ['$rootScope', '$log', 'webrtcFactory', 'tokenAPI', 'session',
-    'ioSocketConnection', 'ioConnectionManager', '$timeout', 'easyRTCBitRates', 'currentConferenceState',
+    'ioSocketConnection', 'ioConnectionManager', '$timeout', 'EASYRTC_BITRATES', 'currentConferenceState',
     'LOCAL_VIDEO_ID', 'REMOTE_VIDEO_IDS', 'EASYRTC_APPLICATION_NAME', 'EASYRTC_EVENTS', '$q', 'listenerFactory', 'MAX_P2P_MESSAGE_LENGTH',
-    function($rootScope, $log, webrtcFactory, tokenAPI, session, ioSocketConnection, ioConnectionManager, $timeout, easyRTCBitRates, currentConferenceState,
+    function($rootScope, $log, webrtcFactory, tokenAPI, session, ioSocketConnection, ioConnectionManager, $timeout, EASYRTC_BITRATES, currentConferenceState,
              LOCAL_VIDEO_ID, REMOTE_VIDEO_IDS, EASYRTC_APPLICATION_NAME, EASYRTC_EVENTS, $q, listenerFactory, MAX_P2P_MESSAGE_LENGTH) {
       var easyrtc = webrtcFactory.get();
       easyrtc.enableDataChannels(true);
@@ -352,7 +352,7 @@ angular.module('hublin.easyrtc.connector')
 
       function configureBandwidth(rate) {
         if (rate) {
-          bitRates = easyRTCBitRates[rate];
+          bitRates = EASYRTC_BITRATES[rate];
         } else {
           bitRates = null;
         }
