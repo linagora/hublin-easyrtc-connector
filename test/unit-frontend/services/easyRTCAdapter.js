@@ -16,12 +16,12 @@ var DummyCallbackConstructor = function() {
   };
 };
 
+beforeEach(function() {
+  angular.mock.module('hublin.easyrtc.connector');
+});
+
 describe('easyRTCAdapter service', function() {
   var service, tokenAPI, session, webrtcFactory, easyrtc, currentConferenceState, disconnectCallback, $rootScope, $scope, EASYRTC_BITRATES;
-
-  beforeEach(function() {
-    angular.mock.module('hublin.easyrtc.connector');
-  });
 
   beforeEach(function() {
     var dummyDataOpenListener = new DummyCallbackConstructor(),
@@ -496,8 +496,6 @@ describe('easyRTCAdapter service', function() {
 describe('listenerFactory factory', function() {
   var service, dummyCallback, listen, emptyFunction;
 
-  beforeEach(angular.mock.module('hublin.easyrtc.connector'));
-
   beforeEach(function() {
     inject(function($injector) {
       service = $injector.get('listenerFactory');
@@ -560,10 +558,6 @@ describe('listenerFactory factory', function() {
 
 describe('conferenceState easyrtc service', function() {
     var service, $q, $rootScope, $log, tokenAPI, session, webrtcFactory, webrtcObject, EASYRTC_BITRATES;
-
-    beforeEach(function() {
-      angular.mock.module('hublin.easyrtc.connector');
-    });
 
     beforeEach(function() {
       tokenAPI = {};
