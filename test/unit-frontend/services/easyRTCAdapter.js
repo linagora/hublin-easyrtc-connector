@@ -17,7 +17,7 @@ var DummyCallbackConstructor = function() {
 };
 
 describe('easyRTCAdapter service', function() {
-  var service, tokenAPI, session, webrtcFactory, easyrtc, currentConferenceState, disconnectCallback, $rootScope, $scope, easyRTCBitRates;
+  var service, tokenAPI, session, webrtcFactory, easyrtc, currentConferenceState, disconnectCallback, $rootScope, $scope, EASYRTCBITRATES;
 
   beforeEach(function() {
     angular.mock.module('hublin.easyrtc.connector');
@@ -73,7 +73,7 @@ describe('easyRTCAdapter service', function() {
         return easyrtc;
       }
     };
-    easyRTCBitRates = {
+    EASYRTCBITRATES = {
       low: {
         audio: 20,
         video: 30
@@ -96,7 +96,7 @@ describe('easyRTCAdapter service', function() {
       });
       $provide.value('ioConnectionManager', {});
       $provide.value('currentConferenceState', currentConferenceState);
-      $provide.value('easyRTCBitRates', easyRTCBitRates);
+      $provide.value('EASYRTCBITRATES', EASYRTCBITRATES);
       $provide.value('LOCAL_VIDEO_ID', 'video-thumb0');
       $provide.value('REMOTE_VIDEO_IDS', []);
       $provide.value('EASYRTC_APPLICATION_NAME', 'LiveConference');
@@ -559,7 +559,7 @@ describe('listenerFactory factory', function() {
 });
 
 describe('conferenceState easyrtc service', function() {
-    var service, $q, $rootScope, $log, tokenAPI, session, webrtcFactory, webrtcObject, easyRTCBitRates;
+    var service, $q, $rootScope, $log, tokenAPI, session, webrtcFactory, webrtcObject, EASYRTCBITRATES;
 
     beforeEach(function() {
       angular.mock.module('hublin.easyrtc.connector');
@@ -585,7 +585,7 @@ describe('conferenceState easyrtc service', function() {
           _id: 123
         }
       };
-      easyRTCBitRates = {
+      EASYRTCBITRATES = {
         low: {
           audio: 20,
           video: 30
@@ -656,7 +656,7 @@ describe('conferenceState easyrtc service', function() {
         $provide.value('ioSocketConnection', ioSocketConnection);
         $provide.value('ioConnectionManager', ioConnectionManager);
         $provide.value('currentConferenceState', {});
-        $provide.value('easyRTCBitRates', easyRTCBitRates);
+        $provide.value('EASYRTCBITRATES', EASYRTCBITRATES);
         $provide.value('LOCAL_VIDEO_ID', 'video-thumb0');
         $provide.value('REMOTE_VIDEO_IDS', []);
         $provide.value('EASYRTC_APPLICATION_NAME', 'LiveConference');
