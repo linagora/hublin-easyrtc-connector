@@ -23,8 +23,7 @@ module.exports = function(config) {
     browsers: ['PhantomJS', 'Chrome', 'Firefox'],
     reporters: ['coverage', 'spec'],
     preprocessors: {
-      'frontend/js/**/*.js': ['coverage'],
-      '**/*.jade': ['ng-jade2module']
+      'frontend/js/**/*.js': ['coverage']
     },
 
     plugins: [
@@ -33,8 +32,7 @@ module.exports = function(config) {
       'karma-firefox-launcher',
       'karma-mocha',
       'karma-coverage',
-      'karma-spec-reporter',
-      'karma-ng-jade2module-preprocessor'
+      'karma-spec-reporter'
     ],
 
     coverageReporter: {type: 'text', dir: '/tmp'},
