@@ -1,2 +1,4 @@
 node_modules
 frontend/components
+package-lock.json
+.vscode/
