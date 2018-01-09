@@ -2,7 +2,6 @@
 
 var AwesomeModule = require('awesome-module');
 var Dependency = AwesomeModule.AwesomeModuleDependency;
-var path = require('path');
 
 var myAwesomeModule = new AwesomeModule('hublin.easyrtc.connector', {
   dependencies: [

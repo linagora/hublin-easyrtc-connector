@@ -21,7 +21,7 @@ beforeEach(function() {
 });
 
 describe('easyRTCAdapter service', function() {
-  var service, tokenAPI, session, webrtcFactory, easyrtc, currentConferenceState, disconnectCallback, $rootScope, $scope, EASYRTC_BITRATES;
+  var service, session, webrtcFactory, easyrtc, currentConferenceState, disconnectCallback, $rootScope, $scope, EASYRTC_BITRATES;
 
   beforeEach(function() {
     var dummyDataOpenListener = new DummyCallbackConstructor(),
@@ -56,7 +56,6 @@ describe('easyRTCAdapter service', function() {
       },
       setMaxP2PMessageLength: function() {}
     };
-    tokenAPI = {};
     session = {
       getUsername: function() { return 'Wooot'; },
       getUserId: function() { return 2; },
@@ -362,8 +361,8 @@ describe('easyRTCAdapter service', function() {
     var callMe, dontCallMe;
 
     beforeEach(function() {
-      callMe = chai.spy(),
-      dontCallMe = chai.spy(),
+      callMe = chai.spy();
+      dontCallMe = chai.spy();
       currentConferenceState = {
         conference: {
           _id: null
@@ -389,8 +388,7 @@ describe('easyRTCAdapter service', function() {
       easyrtc.easyApp = function(EASYRTC_APPLICATION_NAME,
                                  LOCAL_VIDEO_ID,
                                  REMOTE_VIDEO_IDS,
-                                 onLoginSuccess,
-                                 onLoginFailure) {
+                                 onLoginSuccess) {
         onLoginSuccess();
       };
 
@@ -405,8 +403,7 @@ describe('easyRTCAdapter service', function() {
       easyrtc.easyApp = function(EASYRTC_APPLICATION_NAME,
                                  LOCAL_VIDEO_ID,
                                  REMOTE_VIDEO_IDS,
-                                 onLoginSuccess,
-                                 onLoginFailure) {
+                                 onLoginSuccess) {
         onLoginSuccess();
       };
 
@@ -453,8 +450,7 @@ describe('easyRTCAdapter service', function() {
       easyrtc.easyApp = function(EASYRTC_APPLICATION_NAME,
                                  LOCAL_VIDEO_ID,
                                  REMOTE_VIDEO_IDS,
-                                 onLoginSuccess,
-                                 onLoginFailure) {
+                                 onLoginSuccess) {
         onLoginSuccess();
       };
 
@@ -557,7 +553,7 @@ describe('listenerFactory factory', function() {
 });
 
 describe('conferenceState easyrtc service', function() {
-    var service, $q, $rootScope, $log, tokenAPI, session, webrtcFactory, webrtcObject, EASYRTC_BITRATES;
+    var service, $log, tokenAPI, session, webrtcFactory, webrtcObject, EASYRTC_BITRATES;
 
     beforeEach(function() {
       tokenAPI = {};
@@ -706,10 +702,8 @@ describe('conferenceState easyrtc service', function() {
           $provide.value('webrtcFactory', webrtcFactory);
         });
 
-        inject(function($injector, _$q_, _$rootScope_) {
+        inject(function($injector) {
           service = $injector.get('easyRTCAdapter');
-          $q = _$q_;
-          $rootScope = _$rootScope_;
         });
 
         var conferenceState = {
@@ -738,10 +732,8 @@ describe('conferenceState easyrtc service', function() {
           $provide.value('webrtcFactory', webrtcFactory);
         });
 
-        inject(function($injector, _$q_, _$rootScope_) {
+        inject(function($injector) {
           service = $injector.get('easyRTCAdapter');
-          $q = _$q_;
-          $rootScope = _$rootScope_;
         });
 
         var conferenceState = {
@@ -768,10 +760,8 @@ describe('conferenceState easyrtc service', function() {
           $provide.value('webrtcFactory', webrtcFactory);
         });
 
-        inject(function($injector, _$q_, _$rootScope_) {
+        inject(function($injector) {
           service = $injector.get('easyRTCAdapter');
-          $q = _$q_;
-          $rootScope = _$rootScope_;
         });
 
         var conferenceState = {
