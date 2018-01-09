@@ -34,7 +34,7 @@ angular.module('hublin.easyrtc.connector')
 
   .factory('webrtcFactory', function() {
     function get($window) {
-      return window.easyrtc;
+      return $window.easyrtc;
     }
 
     return {
@@ -182,7 +182,7 @@ angular.module('hublin.easyrtc.connector')
           }
         }
 
-        function roomOccupantListener(roomName, data, isPrimary) {
+        function roomOccupantListener(roomName, data) {
           easyrtc.setRoomOccupantListener(null); // so we're only called once.
           $log.debug('New user(s) in room ' + roomName);
           $log.debug('Room data ', data);
@@ -195,6 +195,8 @@ angular.module('hublin.easyrtc.connector')
             $log.error('Error while connecting to user');
           }
 
+          /*eslint no-restricted-syntax: 1*/
+          /*eslint guard-for-in: 1*/
           for (var easyrtcid in data) {
             $log.debug('Calling: ' + easyrtc.idToName(easyrtcid));
             easyrtc.call(easyrtcid, onSuccess, onFailure);
@@ -270,6 +272,7 @@ angular.module('hublin.easyrtc.connector')
             $rootScope.$apply();
           });
 
+          /*eslint no-use-before-define: 1*/
           addDataChannelOpenListener(function(easyrtcid) {
             var data = prepareAttendeeForBroadcast(conferenceState.attendees[0]);
             $log.debug('Data channel open, sending %s event with data: ', EASYRTC_EVENTS.attendeeUpdate, data);
@@ -427,7 +430,7 @@ angular.module('hublin.easyrtc.connector')
 
       function connection() {
         var defer = $q.defer();
-        onConnectionCallback(function(errorCode, message) {
+        onConnectionCallback(function(errorCode) {
           if (!errorCode) {
             defer.resolve();
           } else {
@@ -451,7 +454,7 @@ angular.module('hublin.easyrtc.connector')
         var listener = listenerFactory(easyrtc.setPeerListener, 'peerListener');
         return {
           addListener: function(callback, acceptMsgType) {
-            var decoratedCallback = function(easyrtcid, msgType, msgData, targeting) {
+            var decoratedCallback = function(easyrtcid, msgType) {
               if (acceptMsgType === undefined || msgType === acceptMsgType) {
                 callback.apply(this, arguments);
               }

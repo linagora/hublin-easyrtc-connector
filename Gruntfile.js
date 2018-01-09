@@ -3,11 +3,9 @@
 module.exports = function(grunt) {
   grunt.initConfig({
     eslint: {
-      options: {
-        quiet: true
-      },
       all: {
         src: [
+          'index.js',
           'Gruntfile.js',
           'tasks/**/*.js',
           'test/**/**/*.js',
@@ -65,6 +63,6 @@ module.exports = function(grunt) {
   grunt.registerTask('linters', 'Check code for lint', ['eslint:all', 'lint_pattern']);
   grunt.registerTask('test-unit-backend', 'Test backend code', ['mochacli:backend']);
   grunt.registerTask('test-unit-frontend', 'Test frontend code', ['karma:unit']);
-  grunt.registerTask('test', ['test-unit-frontend', 'test-unit-backend']);
+  grunt.registerTask('test', ['linters', 'test-unit-frontend', 'test-unit-backend']);
   grunt.registerTask('default', ['test']);
 };
