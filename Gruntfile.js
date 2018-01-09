@@ -2,10 +2,9 @@
 
 module.exports = function(grunt) {
   grunt.initConfig({
-    jshint: {
+    eslint: {
       options: {
-        jshintrc: '.jshintrc',
-        ignores: []
+        quiet: true
       },
       all: {
         src: [
@@ -17,14 +16,6 @@ module.exports = function(grunt) {
         ]
       }
     },
-    jscs: {
-      options: {
-        config: '.jscsrc'
-      },
-      all: {
-        src: ['<%= jshint.all.src %>']
-      }
-    },
     lint_pattern: {
       options: {
         rules: [
@@ -32,7 +23,7 @@ module.exports = function(grunt) {
         ]
       },
       all: {
-        src: ['<%= jshint.all.src %>']
+        src: ['<%= eslint.all.src %>']
       },
       css: {
         options: {
@@ -66,13 +57,12 @@ module.exports = function(grunt) {
     }
   });
 
-  grunt.loadNpmTasks('grunt-contrib-jshint');
+  grunt.loadNpmTasks('grunt-eslint');
   grunt.loadNpmTasks('@linagora/grunt-lint-pattern');
-  grunt.loadNpmTasks('grunt-jscs');
   grunt.loadNpmTasks('grunt-mocha-cli');
   grunt.loadNpmTasks('grunt-karma');
 
-  grunt.registerTask('linters', 'Check code for lint', ['jshint:all', 'jscs:all', 'lint_pattern']);
+  grunt.registerTask('linters', 'Check code for lint', ['eslint:all', 'lint_pattern']);
   grunt.registerTask('test-unit-backend', 'Test backend code', ['mochacli:backend']);
   grunt.registerTask('test-unit-frontend', 'Test frontend code', ['karma:unit']);
   grunt.registerTask('test', ['test-unit-frontend', 'test-unit-backend']);
