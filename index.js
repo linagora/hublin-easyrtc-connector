@@ -1,9 +1,7 @@
-'use strict';
+const AwesomeModule = require('awesome-module');
+const Dependency = AwesomeModule.AwesomeModuleDependency;
 
-var AwesomeModule = require('awesome-module');
-var Dependency = AwesomeModule.AwesomeModuleDependency;
-
-var myAwesomeModule = new AwesomeModule('hublin.easyrtc.connector', {
+const easyRTCConnector = new AwesomeModule('hublin.easyrtc.connector', {
   dependencies: [
     new Dependency(Dependency.TYPE_ABILITY, 'wsserver', 'wsserver'),
     new Dependency(Dependency.TYPE_NAME, 'webserver.wrapper', 'webserver-wrapper'),
@@ -11,26 +9,23 @@ var myAwesomeModule = new AwesomeModule('hublin.easyrtc.connector', {
   ],
   abilities: ['hublin.webrtc.connector'],
   states: {
-    lib: function(dependencies, callback) {
-      var lib = {
+    lib: (dependencies, callback) => {
+      callback(null, {
         lib: require('./backend/lib')(dependencies)
-      };
-
-      return callback(null, lib);
+      });
     },
 
-    deploy: function(dependencies, callback) {
-      var app = require('./backend/webserver/application')();
-      var webserverWrapper = dependencies('webserver-wrapper');
+    deploy: (dependencies, callback) => {
+      const app = require('./backend/webserver/application')();
+      const webserverWrapper = dependencies('webserver-wrapper');
+
       webserverWrapper.injectAngularModules('connector', ['app.js', 'services/easyRTCAdapter.js'], 'hublin.easyrtc.connector', ['live-conference']);
+      webserverWrapper.injectJSAsset('connector', ['easyrtc/easyrtc.js', 'easyrtc/labs/easyrtc_rates.js'], ['connector']);
       webserverWrapper.addApp('connector', app);
-      return callback();
+
+      callback();
     }
   }
 });
 
-/**
- * The main AwesomeModule describing the application.
- * @type {AwesomeModule}
- */
-module.exports = myAwesomeModule;
+module.exports = easyRTCConnector;

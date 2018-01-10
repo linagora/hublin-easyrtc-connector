@@ -32,8 +32,8 @@ angular.module('hublin.easyrtc.connector')
     };
   }])
 
-  .factory('webrtcFactory', function() {
-    function get($window) {
+  .factory('webrtcFactory', function($window) {
+    function get() {
       return $window.easyrtc;
     }
 
