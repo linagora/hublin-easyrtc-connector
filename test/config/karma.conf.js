@@ -1,5 +1,7 @@
 'use strict';
 
+var singleRun = process.env.SINGLE_RUN ? process.env.SINGLE_RUN !== 'false' : true;
+
 module.exports = function(config) {
   config.set({
     basePath: '../../',
@@ -12,13 +14,14 @@ module.exports = function(config) {
       'frontend/components/angular-ui-router/release/angular-ui-router.min.js',
       'frontend/components/angular-mocks/angular-mocks.js',
       'frontend/components/dynamic-directive/dist/dynamic-directive.min.js',
+      'frontend/js/app.js',
       'frontend/js/**/*.js',
       'test/unit-frontend/**/*.js',
       'frontend/views/**/*.jade'
     ],
     frameworks: ['mocha'],
     colors: true,
-    singleRun: true,
+    singleRun: singleRun,
     autoWatch: true,
     browsers: ['PhantomJS', 'Chrome', 'Firefox'],
     reporters: ['coverage', 'spec'],

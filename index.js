@@ -24,7 +24,12 @@ const easyRTCConnector = new AwesomeModule(MODULE_NAME, {
       const app = require('./backend/webserver/application')();
       const webserverWrapper = dependencies('webserver-wrapper');
 
-      webserverWrapper.injectAngularModules('connector', ['app.js', 'services/easyRTCAdapter.js'], MODULE_NAME, ['live-conference']);
+      webserverWrapper.injectAngularModules('connector', [
+        'app.js',
+        'easyrtc-adapter.service.js',
+        'easyrtc-factory.service.js',
+        'listener-factory.service.js'
+      ], MODULE_NAME, ['live-conference']);
       webserverWrapper.injectJSAsset('connector', ['easyrtc/easyrtc.js', 'easyrtc/labs/easyrtc_rates.js'], ['connector']);
       webserverWrapper.addApp('connector', app);
 

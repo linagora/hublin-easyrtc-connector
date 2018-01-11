@@ -87,7 +87,7 @@ describe('easyRTCAdapter service', function() {
     module(function($provide) {
       $provide.value('tokenAPI', {});
       $provide.value('session', session);
-      $provide.value('webrtcFactory', webrtcFactory);
+      $provide.value('easyRTCFactory', webrtcFactory);
       $provide.value('ioSocketConnection', {
         isConnected: function() { return true; },
         addConnectCallback: function() {},
@@ -489,12 +489,12 @@ describe('easyRTCAdapter service', function() {
   });
 });
 
-describe('listenerFactory factory', function() {
+describe('easyRTCListenerFactory factory', function() {
   var service, dummyCallback, listen, emptyFunction;
 
   beforeEach(function() {
     inject(function($injector) {
-      service = $injector.get('listenerFactory');
+      service = $injector.get('easyRTCListenerFactory');
     });
 
     dummyCallback = new DummyCallbackConstructor();
@@ -642,7 +642,7 @@ describe('conferenceState easyrtc service', function() {
         $provide.value('$log', $log);
         $provide.value('tokenAPI', tokenAPI);
         $provide.value('session', session);
-        $provide.value('webrtcFactory', webrtcFactory);
+        $provide.value('easyRTCFactory', webrtcFactory);
         $provide.value('ioSocketConnection', ioSocketConnection);
         $provide.value('ioConnectionManager', ioConnectionManager);
         $provide.value('currentConferenceState', {});
@@ -838,7 +838,7 @@ describe('conferenceState easyrtc service', function() {
           done();
         };
         module(function($provide) {
-          $provide.value('webrtcFactory', webrtcFactory);
+          $provide.value('easyRTCFactory', webrtcFactory);
         });
         inject(function(easyRTCAdapter) {
           service = easyRTCAdapter;
@@ -849,9 +849,10 @@ describe('conferenceState easyrtc service', function() {
 
     it('shoud expose easyrtc connection constants', function() {
       var service, easyrtc;
-      inject(function(easyRTCAdapter, webrtcFactory) {
+
+      inject(function(easyRTCAdapter, easyRTCFactory) {
         service = easyRTCAdapter;
-        easyrtc = webrtcFactory.get();
+        easyrtc = easyRTCFactory.get();
       });
       expect(service.NOT_CONNECTED).to.equal(easyrtc.NOT_CONNECTED);
       expect(service.BECOMING_CONNECTED).to.equal(easyrtc.BECOMING_CONNECTED);
