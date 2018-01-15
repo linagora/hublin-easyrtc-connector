@@ -2,6 +2,6 @@
   'use strict';
 
   angular.module('hublin.easyrtc.connector')
-    .constant('EASYRTC_MODULE_NAME', 'easyrtc');
+    .constant('EASYRTC_MODULE_NAME', 'hublin.easyrtc.connector');
 
 })(angular);
