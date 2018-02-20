@@ -132,6 +132,8 @@ describe('easyRTCAdapter service', function() {
 
       service.broadcastData('message', { da: 'ta' });
 
+      $rootScope.$apply();
+
       expect(calledIds).to.deep.equal(['other1', 'other2']);
     });
 
@@ -256,6 +258,19 @@ describe('easyRTCAdapter service', function() {
       expect(stopSpy).to.have.been.called.twice;
     });
 
+  });
+
+  describe('myEasyrtcid function', function() {
+    it('should return the easyrtc Id', function(done) {
+      easyrtc.myEasyrtcid = 'rtcId';
+
+      service.myRtcid().then(function(rtcId) {
+        expect(rtcId).to.equal(easyrtc.myEasyrtcid);
+        done();
+      });
+
+      $rootScope.$digest();
+    });
   });
 
   describe('sendData function', function() {
