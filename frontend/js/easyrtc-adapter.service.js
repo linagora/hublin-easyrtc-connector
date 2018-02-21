@@ -88,7 +88,7 @@
       stopLocalStream();
       easyrtc.leaveRoom(conference._id, function() {
         $log.debug('Left the conference ' + conference._id);
-        $rootScope.$emit('conference:left', {conference_id: conference._id});
+        $rootScope.$emit('conference:left', { conference_id: conference._id });
       }, function() {
         $log.error('Error while leaving conference');
       });
@@ -111,37 +111,37 @@
 
     // This function will be called when the connection has occured
     var ret = (function() {
-        var callback,
-          connected = false, failed = false;
+      var callback,
+        connected = false, failed = false;
 
-        function onConnectionCallbackHelper(newCallback) {
-          if (connected && failed === false) {
-            newCallback();
-          } else if (!connected && failed === false) {
-            callback = newCallback;
-          } else {
-            newCallback(failed);
-          }
+      function onConnectionCallbackHelper(newCallback) {
+        if (connected && failed === false) {
+          newCallback();
+        } else if (!connected && failed === false) {
+          callback = newCallback;
+        } else {
+          newCallback(failed);
         }
-        function callOnConnectedSuccess() {
-          connected = true;
-          if (callback !== undefined) {
-            callback();
-          }
+      }
+      function callOnConnectedSuccess() {
+        connected = true;
+        if (callback !== undefined) {
+          callback();
         }
-        function callOnConnectedError(errorCode, message) {
-          failed = {errorCode: errorCode, message: message};
-          if (callback !== undefined) {
-            callback(failed);
-          }
+      }
+      function callOnConnectedError(errorCode, message) {
+        failed = { errorCode: errorCode, message: message };
+        if (callback !== undefined) {
+          callback(failed);
         }
+      }
 
-        return {
-          onConnectionCallback: easyRTCListenerFactory(onConnectionCallbackHelper).addListener,
-          callOnConnectedSuccess: callOnConnectedSuccess,
-          callOnConnectedError: callOnConnectedError
-        };
-      })(),
+      return {
+        onConnectionCallback: easyRTCListenerFactory(onConnectionCallbackHelper).addListener,
+        callOnConnectedSuccess: callOnConnectedSuccess,
+        callOnConnectedError: callOnConnectedError
+      };
+    })(),
       onConnectionCallback = ret.onConnectionCallback,
       callOnConnectedSuccess = ret.callOnConnectedSuccess,
       callOnConnectedError = ret.callOnConnectedError;
@@ -180,8 +180,8 @@
       }
 
       if (bitRates) {
-        var localFilter = easyrtc.buildLocalSdpFilter({audioRecvBitrate: bitRates.audio, videoRecvBitrate: bitRates.video});
-        var remoteFilter = easyrtc.buildRemoteSdpFilter({audioSendBitrate: bitRates.audio, videoSendBitrate: bitRates.video});
+        var localFilter = easyrtc.buildLocalSdpFilter({ audioRecvBitrate: bitRates.audio, videoRecvBitrate: bitRates.video });
+        var remoteFilter = easyrtc.buildRemoteSdpFilter({ audioSendBitrate: bitRates.audio, videoSendBitrate: bitRates.video });
 
         easyrtc.setSdpFilters(localFilter, remoteFilter);
       }
@@ -207,7 +207,7 @@
       function onWebsocket() {
         var sio = ioSocketConnection.getSio();
 
-        sio.socket = {connected: true};
+        sio.socket = { connected: true };
         easyrtc.useThisSocketConnection(sio);
 
         function onLoginSuccess(easyrtcid) {
@@ -342,7 +342,7 @@
     }
 
     function myEasyrtcid() {
-      return easyrtc.myEasyrtcid;
+      return $q.when(easyrtc.myEasyrtcid);
     }
 
     function prepareAttendeeForBroadcast(attendee) {
@@ -365,23 +365,27 @@
         return;
       }
 
-      occupants.forEach(function(easyrtcid) {
-        if (easyrtcid === myEasyrtcid()) {
-          return;
-        }
+      myEasyrtcid().then(function(rtcId) {
+        occupants.forEach(function(easyrtcid) {
+          if (easyrtcid === rtcId) {
+            return;
+          }
 
-        easyrtc.sendData(easyrtcid, msgType, data);
+          easyrtc.sendData(easyrtcid, msgType, data);
+        });
       });
     }
 
     function broadcastMe() {
-      var attendee = currentConferenceState.getAttendeeByRtcid(myEasyrtcid());
+      myEasyrtcid().then(function(rtcId) {
+        var attendee = currentConferenceState.getAttendeeByRtcid(rtcId);
 
-      if (!attendee) {
-        return;
-      }
+        if (!attendee) {
+          return;
+        }
 
-      broadcastData(EASYRTC_EVENTS.attendeeUpdate, prepareAttendeeForBroadcast(attendee));
+        broadcastData(EASYRTC_EVENTS.attendeeUpdate, prepareAttendeeForBroadcast(attendee));
+      });
     }
 
     easyrtc.setDataChannelCloseListener(function(easyrtcid) {
